@@ -72,3 +72,78 @@ const swiper = new Swiper(".testimonial-swiper", {
     disableOnInteraction: false,
     },
 });
+
+document.querySelectorAll('.faq-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const faqItem = header.parentElement;
+      const button = header.querySelector('.expand-button');
+
+      faqItem.classList.toggle('open');
+
+      if (faqItem.classList.contains('open')) {
+        button.textContent = '×';
+      } else {
+        button.textContent = '+';
+      }
+    });
+  });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.slider-container');
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dotsContainer = document.querySelector('.slider-dots');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        
+        let currentIndex = 0;
+        const slideCount = slides.length;
+        
+        // Create dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+        
+        // Update slider position
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update dots
+            document.querySelectorAll('.slider-dots .dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+        
+        // Navigation functions
+        function goToSlide(index) {
+            currentIndex = (index + slideCount) % slideCount;
+            updateSlider();
+        }
+        
+        function nextSlide() {
+            goToSlide(currentIndex + 1);
+        }
+        
+        function prevSlide() {
+            goToSlide(currentIndex - 1);
+        }
+        
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Auto-rotate (optional)
+        let slideInterval = setInterval(nextSlide, 5000);
+        
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        slider.addEventListener('mouseleave', () => {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+    });
