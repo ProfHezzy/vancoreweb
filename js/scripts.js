@@ -91,67 +91,142 @@ document.querySelectorAll('.faq-header').forEach(header => {
 
 //----------------Image Slide-----------------------
 document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.slider-container');
-            const slides = document.querySelectorAll('.testimonial-slide');
-            const dotsContainer = document.querySelector('.slider-dots');
-            const prevBtn = document.querySelector('.prev-btn');
-            const nextBtn = document.querySelector('.next-btn');
-            const wrapper = document.querySelector('.slider-wrapper');
+    const slider = document.querySelector('.slider-container');
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dotsContainer = document.querySelector('.slider-dots');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const wrapper = document.querySelector('.slider-wrapper');
 
-            let currentIndex = 0;
-            const slideCount = slides.length;
-            let isSliding = false; // To prevent multiple quick clicks
+    let currentIndex = 0;
+    const slideCount = slides.length;
+    let isSliding = false; // To prevent multiple quick clicks
 
-            // Create dots
-            slides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(index));
-                dotsContainer.appendChild(dot);
-            });
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
 
-            // Update slider position
-            function updateSlider(index) {
-                wrapper.style.transform = `translateX(-${index * 100}%)`;
-                document.querySelectorAll('.slider-dots .dot').forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
-                });
-            }
-
-            // Go to a specific slide
-            function goToSlide(index) {
-                if (isSliding) return;
-                isSliding = true;
-
-                currentIndex = (index + slideCount) % slideCount;  //handle negative and positive index
-                updateSlider(currentIndex);
-
-                setTimeout(() => {
-                    isSliding = false;
-                }, 500); // 0.5s transition
-            }
-
-            function nextSlide() {
-                goToSlide(currentIndex + 1);
-            }
-
-            function prevSlide() {
-                goToSlide(currentIndex - 1);
-            }
-
-            nextBtn.addEventListener('click', nextSlide);
-            prevBtn.addEventListener('click', prevSlide);
-
-             // Auto-rotate, but continuous
-            let slideInterval = setInterval(nextSlide, 3000);
-
-            // Pause on hover
-            slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
-            slider.addEventListener('mouseleave', () => {
-                clearInterval(slideInterval);
-                slideInterval = setInterval(nextSlide, 3000);
-            });
-
-            updateSlider(currentIndex); // Initialize slider position
+    // Update slider position
+    function updateSlider(index) {
+        wrapper.style.transform = `translateX(-${index * 100}%)`;
+        document.querySelectorAll('.slider-dots .dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
         });
+    }
+
+    // Go to a specific slide
+    function goToSlide(index) {
+        if (isSliding) return;
+        isSliding = true;
+
+        currentIndex = (index + slideCount) % slideCount;  //handle negative and positive index
+        updateSlider(currentIndex);
+
+        setTimeout(() => {
+            isSliding = false;
+        }, 1000); // 0.5s transition
+    }
+
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+        // Auto-rotate, but continuous
+    let slideInterval = setInterval(nextSlide, 3000);
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    slider.addEventListener('mouseleave', () => {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 3000);
+    });
+
+    updateSlider(currentIndex); // Initialize slider position
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const steps = document.querySelectorAll(".step");
+    const stepNumbers = document.querySelectorAll(".step-number");
+    const stepLines = document.querySelectorAll(".step-line");
+    const sideTexts = document.querySelectorAll(".side");
+    const headings = document.querySelectorAll(".side h5");
+    const paragraphs = document.querySelectorAll(".side p");
+
+    // Function to animate a step
+    function animateStep(index) {
+        stepNumbers[index].classList.add("active");
+        setTimeout(() => {
+            if (stepLines[index]) {
+                stepLines[index].classList.add("active");
+                stepLines[index].style.height = "100%";
+            }
+        }, 300);
+        setTimeout(() => {
+            sideTexts[index].classList.add("active");
+        }, 600);
+        setTimeout(() => {
+            headings[index].classList.add("active");
+        }, 900);
+        setTimeout(() => {
+            paragraphs[index].classList.add("active");
+        }, 1200);
+    }
+
+    // Function to reset a step
+    function resetStep(index) {
+        stepNumbers[index].classList.remove("active");
+        if (stepLines[index]) {
+            stepLines[index].classList.remove("active");
+            stepLines[index].style.height = "0";
+        }
+        sideTexts[index].classList.remove("active");
+        headings[index].classList.remove("active");
+        paragraphs[index].classList.remove("active");
+    }
+
+    // Intersection Observer setup
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const step = entry.target.closest(".step");
+                if (step) {
+                    const index = Array.from(steps).indexOf(step);
+                    if (entry.isIntersecting) {
+                        animateStep(index);
+                    } else {
+                        resetStep(index); // so it replays when back in view
+                    }
+                }
+            });
+        },
+        { threshold: 0.3 }
+    );
+
+    // Observe each step
+    steps.forEach((step) => observer.observe(step));
+
+    // Reset everything on load
+    steps.forEach((_, index) => resetStep(index));
+});
+
+const images = document.querySelectorAll('.mockup-image');
+let current = 0;
+
+setInterval(() => {
+images[current].classList.remove('active');
+current = (current + 1) % images.length;
+images[current].classList.add('active');
+}, 3000);
