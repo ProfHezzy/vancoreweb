@@ -4,7 +4,7 @@
     --primary-light: #EFF6FF;
     --secondary: #10B981;
     --text-dark: #1F2937;
-    --text-medium: #4B5563;
+    --text-medium: #396eb8;
     --text-light: #6B7280;
     --white: #FFFFFF;
     --gray-light: #F3F4F6;
@@ -120,14 +120,17 @@ body {
     max-width: 100%;
     word-wrap: break-word;
     white-space: normal;
+    
 }
 
 /* Buttons */
 .btn-vancore {
-    padding: 8px 20px;
+    padding: 8px 0px;
     border-radius: var(--border-radius);
     font-weight: 600;
     transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
 }
 
 .btn-vancore-primary {
@@ -149,15 +152,50 @@ body {
 }
 
 .btn-vancore-primary:hover {
+    
     background-color: var(--primary-dark);
+    color: #FFFFFF;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+.btn-vancore span {
+  display: block;
+  transition: all 0.4s ease;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-vancore .default-text {
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1;
+}
+
+.btn-vancore .hover-text {
+  top: 100%;
+  opacity: 0;
+}
+
+.btn-vancore:hover .default-text {
+  top: 0%;
+  opacity: 0;
+  transform: translateY(-150%);
+}
+
+.btn-vancore:hover .hover-text {
+  top: 50%;
+  opacity: 1;
+  transform: translateY(-50%);
 }
 
 .btn-vancore-outline {
     width: 155px;
     height: 44px;
-    padding: 10px 24px;
+    padding: 10px 10px;
     gap: 8px;
     border-radius: 8px;
     background: #E3E5E8;
@@ -311,7 +349,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* How It Works Section */
+/* How It Works - Enhanced Animations */
 .how-it-works {
     background: linear-gradient(135deg, #0B121B, #101925);
     color: #fff;
@@ -330,52 +368,253 @@ body {
 }
 
 .steps {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-right: 50px;
 }
 
 .step {
-  position: relative;
-  padding: 0 0 120px 60px;
+    position: relative;
+    padding: 0 0 120px 60px;
 }
 
 .step-number {
-  width: 90px;
-  height: 90px;
-  background-color: #1c2436;
-  color: #fff;
-  border-radius: 50%;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  font-size: 1.5rem;
+    width: 90px;
+    height: 90px;
+    background-color: #1c2436;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    font-size: 1.5rem;
+    transition: all 1.5s ease;
+    border: 2px solid transparent;
+}
+
+.step-number.active {
+    background-color: #007bff;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
 }
 
 .step-line {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: calc(100% - 45px);
-  background-color: #1c2436;
-  left: 45px;
-  top: 45px;
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background-color: #1c2436;
+    left: 45px;
+    top: 45px;
+    transition: height 1.5s ease;
+}
+
+.step-line.active {
+    background-color: #007bff;
+    height: calc(100% - 45px);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+@keyframes fillLine {
+    0% {
+        height: 0;
+        background-size: 100% 0%;
+    }
+    100% {
+        height: calc(100% - 45px);
+        background-size: 100% 100%;
+    }
 }
 
 .step .side {
-  margin: 20px 100px 0 100px;
+    margin: 20px 100px 0 100px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.5s ease 0.3s; /* Added delay */
+}
+
+.step .side.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.step .side h5 {
+    transition: all 0.8s ease 0.5s;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.step .side.active h5 {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.step .side p {
+    transition: all 0.8s ease 0.7s;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.step .side.active p {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .step:last-child .step-line {
-  display: none;
+    display: none;
 }
 
+/* Tablet Styles */
+.tablet {
+  width: 600px;
+  height: 400px;
+  background: #222;
+  border-radius: 30px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  padding: 0 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mockup-image {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.mockup-image.active {
+  opacity: 1;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .how-it-works .content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .steps {
+        padding-right: 0;
+        width: 100%;
+    }
+    
+    .tablet-container {
+        flex: 1;
+        max-width: 100%;
+        margin-top: 50px;
+    }
+    
+    .step {
+        padding: 0 0 80px 60px;
+    }
+    
+    .step .side {
+        margin: 20px 0 0 100px;
+    }
+
+    /* Mockup Frame Responsiveness */
+    .tablet-frame {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .tablet-stand {
+        display: none;
+    }
+
+    .tablet-container::after {
+        display: none;
+    }
+
+    .step-number {
+        width: 80px;
+        height: 80px;
+        font-size: 1.5rem;
+    }
+
+    .step-line {
+        left: 40px;
+    }
+
+    .step .side {
+        margin: 20px 0 0 80px;
+    }
+
+    .step .side h5 {
+        font-size: 1.2rem;
+    }
+
+    .step .side p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .step-number {
+        width: 70px;
+        height: 70px;
+        font-size: 1.2rem;
+    }
+    
+    .step-line {
+        left: 35px;
+    }
+    
+    .step .side {
+        margin: 15px 0 0 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .how-it-works {
+        padding: 60px 0;
+    }
+    
+    .step-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1rem;
+    }
+    
+    .step .side {
+        margin: 10px 0 0 70px;
+    }
+    
+    .step .side h5 {
+        font-size: 1.1rem;
+    }
+    
+    .step .side p {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Tablet / Mockup Section */
 .tablet-container {
   top: 50px;
   flex: 0 0 500px;
@@ -448,6 +687,8 @@ body {
   border-radius: 50%;
   box-shadow: 0 8px 6px rgba(0, 0, 0, 0.3);
 }
+
+
 
 /* Mobile & Tablet Responsiveness */
 @media (max-width: 992px) {
@@ -1384,243 +1625,133 @@ body {
     color: #007bff;
 }
 
-@media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
-        gap: 30px;
-    }
 
-    .footer-bottom {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
 
-    .legal-links {
-        justify-content: center;
-    }
-}
 
-/* Responsive Styles */
+/* ========== Tablet and Mobile Responsiveness ========== */
+
+/* ---------- Large Tablets (≤ 992px) ---------- */
 @media (max-width: 992px) {
-    .feature-card {
-        padding: 0;
-    }
-    .feature-card .col-md-7,
-    .feature-card .col-md-5 {
-        padding: 0px;
-        border-radius: 0;
-    }
-    .feature-card h3 {
-        font-size: 1.75rem;
-    }
-    .feature-card img {
-        height: fit-content;
-        margin: 0;
-        border-radius: 0;
-    }
+  .feature-card {
+    padding: 0;
+  }
+  .feature-card .col-md-7,
+  .feature-card .col-md-5 {
+    padding: 0;
+    border-radius: 0;
+    width: 100%;
+    text-align: center;
+  }
 
-    /*---- FAQS-------------------*/
-    .faq-container .faq-text .subheading {
-        max-width: none;
-    }
+  .feature-card h3 {
+    font-size: 1.75rem;
+  }
 
-    /*====Footer==============*/
-    .footer-bottom {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
+  .feature-card img {
+    height: fit-content;
+    margin: 0;
+  }
 
-    .legal-links {
-        justify-content: center;
-    }
-    
-    .faq-row {
-        flex-direction: column;
-    }
+  .faq-container .faq-text .subheading {
+    max-width: none;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .legal-links {
+    justify-content: center;
+  }
+
+  .faq-row {
+    flex-direction: column;
+  }
 }
 
-
+/* ---------- Small Tablets & Phones (≤ 768px) ---------- */
 @media (max-width: 768px) {
-    /* Buttons */
-    .btn-vancore {
-        padding: 8px 20px;
-        border-radius: var(--border-radius);
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
+  .btn-vancore {
+    padding: 8px 0px;
+    font-size: 14px;
+    line-height: 20px;
+  }
 
-    .btn-vancore-primary {
-        font-size: 12px;
-        line-height: 20px;
-    }
+  .hero-container,
+  .footer-content,
+  .connect-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
 
-    .btn-vancore-outline {
-        font-size: 12px;
-        line-height: 16px;;
-    }
+  .app-badges {
+    justify-content: center;
+  }
 
-    .feature-card {
-        flex-direction: column;
-        padding: 0px;
-        gap: 0;
-    }
-    .feature-card .col-md-7,
-    .feature-card .col-md-5 {
-        width: 100%;
-        text-align: center;
-    }
+  .faq-text {
+    max-width: 100%;
+    text-align: center;
+  }
 
-    .feature-card .col-md-5 {
-        margin: 0;
-        padding: 0;
-        border-radius: 0;
-    }
-
-    .feature-card .col-md-5  img {
-        border-radius: 0;
-    }
-    .feature-img {
-        height: fit-content;
-        object-fit: cover;
-        border-radius: 0;
-    }
-    
-    .hero-container {
-        flex-direction: column;
-        gap: 40px;
-    }
-    
-    .hero-content {
-        order: 2;
-        text-align: center;
-    }
-    
-    .hero-image {
-        order: 1;
-    }
-    
-    .app-badges {
-        justify-content: center;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .legal-links {
-        justify-content: center;
-    }
-    
-    .faq-row {
-        flex-direction: column;
-    }
-
-    .faq-text {
-        max-width: 100%;
-        text-align: center;
-    }
+  .swiper-slide {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 
+/* ---------- Phones (≤ 576px) ---------- */
 @media (max-width: 576px) {
-    .step {
-        padding: 0 0 80px 60px;
-    }
+  .btn-vancore {
+    padding: 6px 0px;
+    font-size: 12px;
+    line-height: 18px;
+  }
 
-    .step .side {
-        margin: 20px 20px 0 100px;
-    }
+  .step {
+    padding: 0 0 80px 60px;
+  }
 
-    .step-number {
-        width: 70px;
-        height: 70px;
-        font-size: 1.2rem;
-    }
+  .step-number {
+    width: 70px;
+    height: 70px;
+    font-size: 1.2rem;
+  }
 
-    .step-line {
-        left: 35px;
-    }
+  .step-line {
+    left: 35px;
+  }
 
-    .step .step-title {
+  .step .step-title {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 10px;
     color: #fff;
-    }
+  }
 
-    .step .step-description {
+  .step .step-description {
     font-size: 1rem;
     color: #cbd5e1;
     line-height: 1.5;
-    }
+  }
 
-    .how-it-works .illustration {
-    flex: 1;
-    }
-
-    .how-it-works .illustration img {
+  .how-it-works .illustration img {
     width: 100%;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
-    }
-    .tablet-container {
-        position: relative;
-        top: 0;
-        flex: none;
-        width: 100%;
-        max-width: 100%;
-        margin: 0 auto;
-        transform: none;
-    }
-    .tablet-frame {
-        transform: none;
-    }
-    .tablet-stand {
-        display: none;
-    }
-    .tablet-container::after {
-        display: none;
-    }
-    .step .side {
-        margin: 20px 20px 0 100px;
-    }
-    .steps {
-        padding-right: 0;
-    }
-    .step-number {
-        width: 70px;
-        height: 70px;
-        font-size: 1.2rem;
-    }
-    .step-line {
-        left: 35px;
-    }
-    .step .step-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #fff;
-    }
-    .step .step-description {
-        font-size: 1rem;
-        color: #cbd5e1;
-        line-height: 1.5;
-    }
-    
-    .tablet-frame {
-        transform: none;
-    }
+  }
 
-    /*-I want all th eimages in th Features to fill the div----*/
+  .tablet-container,
+  .tablet-frame {
+    width: 100%;
+    transform: none;
+    margin: 0 auto;
+  }
 
-
-
+  .tablet-stand,
+  .tablet-container::after {
+    display: none;
+  }
 }
