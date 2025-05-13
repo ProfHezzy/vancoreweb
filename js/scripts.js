@@ -222,11 +222,20 @@ document.addEventListener("DOMContentLoaded", () => {
     steps.forEach((_, index) => resetStep(index));
 });
 
-const images = document.querySelectorAll('.mockup-image');
-let current = 0;
+const overlay = document.getElementById('image-overlay');
+        const images = [
+            'images/hero-mockup.png', // Placeholder 1
+            'images/hero-mockup.png'  // Placeholder 2
+        ];
+        let currentImageIndex = 0;
 
-setInterval(() => {
-images[current].classList.remove('active');
-current = (current + 1) % images.length;
-images[current].classList.add('active');
-}, 3000);
+        function swapImages() {
+            overlay.style.backgroundImage = `url(${images[currentImageIndex]})`;
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+        }
+
+        // Initial image load
+        swapImages();
+
+        // Change image every 3 seconds
+        setInterval(swapImages, 3000);
