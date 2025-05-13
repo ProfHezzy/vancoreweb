@@ -25,6 +25,7 @@ body {
     margin: 0;
     padding: 0;
     background: #f9f9f9;
+    overflow-x: hidden;
 }
 
 /* Navigation */
@@ -37,8 +38,8 @@ body {
 }
 
 .navbar-brand img {
-    width: 183px;
-    height: 50px auto;
+    width: 83px;
+    height: 20px auto;
 }
 
 .nav-link {
@@ -327,6 +328,8 @@ body {
 .features-section {
     padding: 80px 0;
     background: #F5F8F7;
+    text-align: left;
+    width: 700px;
 }
 
 .features-section .container {
@@ -507,19 +510,20 @@ body {
     }
 }
 
-.steps {
+.how-it-works .steps {
   width: 800px;
 }
 
-.step .side {
-  width: 200px;
+.how-it-works .step .side {
+  width: 150px;
   margin: 20px 10px 0 0px;
   opacity: 0;
   transform: translateY(30px);
   transition: all 1.5s ease 0.3s; /* Added delay */
+  overflow-x: hidden;
 }
 
-.step .side.active {
+.hover-text .step .side.active {
     opacity: 1;
     transform: translateY(0);
 }
