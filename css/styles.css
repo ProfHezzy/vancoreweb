@@ -31,12 +31,14 @@ body {
 .navbar-vancore {
     background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px 0;
+    padding: 24px 100px;
+    width: 100%;
+    height: auto;
 }
 
 .navbar-brand img {
-    width: 100px;
-    height: auto;
+    width: 183px;
+    height: 50px auto;
 }
 
 .nav-link {
@@ -215,7 +217,7 @@ body {
     margin-bottom: 50px;
 }
 
-.subheading {
+/*.subheading {
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -223,25 +225,20 @@ body {
     margin-bottom: 15px;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.section-description {
+.partners-section .container .section-description {
     font-size: 1rem;
     color: #6c757d;
     margin-bottom: 30px;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-}
+}*/
 
 /* Hero Section */
 .hero-section {
     padding: 100px 0;
     background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
+    text-align: center;
 }
 
 .hero-title {
@@ -255,7 +252,7 @@ body {
     font-size: 1.25rem;
     color: var(--text-medium);
     margin-bottom: 2rem;
-    max-width: 600px;
+    text-align: center;
 }
 
 /* Image Fade Effect */
@@ -275,29 +272,45 @@ body {
 
 /* Partners Section */
 .partners-section {
-    padding: 60px 0;
+    padding: 22px 0;
     background-color: var(--white);
+    gap: 8px;
 }
 
 .partners-slider {
     overflow: hidden;
     position: relative;
+    width: 1284px;
+    height: 86px;
+}
+
+.partners-section .container .section-title {
+    font-family: 'Sora' sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 100%;
+    letter-spacing: 0.7%;
+    margin-bottom: 30px;
+    color: #667085;
+    text-align: center;
+    margin-top: 0;
 }
 
 .partners-track {
     display: flex;
     width: max-content;
     animation: scroll 25s linear infinite;
+  align-items: center;
 }
 
 .partner-logo {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    margin-right: 50px;
+  width: 130px;
+  height: 54px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  margin-right: 50px;
 }
 
 .partner-logo:hover {
@@ -313,16 +326,76 @@ body {
 /* Features Section */
 .features-section {
     padding: 80px 0;
-    background-color: #f8f9fa;
+    background: #F5F8F7;
+}
+
+.features-section .container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.features-section .container h6 {
+  font-family: 'Sora' sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 2px;
+
+}
+
+.features-section .container p {
+  font-family: 'Sora' sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -2%;
+  width: 465px;
+}
+
+.features-section .feature-container {
+  background: #F5F8F7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  width: 1240px;
+  height: auto;
 }
 
 .feature-card {
-    margin-bottom: 50px;
+    margin-bottom: 0px;
     border-radius: 30px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    background-color: white;
-    min-height: 500px;
+    background-color: transparent;
+}
+
+.feature-card .col-md-7,
+.feature-card .col-md-7 {
+  height: 542px;
+  width: 803px;
+  border-radius: 15px;
+  background: transparent;
+
+}
+
+.feature-container .col-md-7 {
+  width: 700px;
+  height: auto;
+  border-radius: 15px;
+  margin: 0 22px 0 0;
+}
+
+.feature-container  .feature-3 {
+  margin: 0 0 0 22px;
+}
+
+.feature-container  .feature-2,
+.feature-container  .feature-5 {
+  height: 542px;
+  width: 1240px;
 }
 
 .feature-card:hover {
@@ -332,9 +405,9 @@ body {
 
 .feature-img {
     width: 100%;
-    height: auto;
+    height: fit-content;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 15px;
     margin: 0 auto;
 }
 
@@ -354,7 +427,7 @@ body {
     background: linear-gradient(135deg, #0B121B, #101925);
     color: #fff;
     position: relative;
-    padding: 80px 0;
+    padding: 10px 0;
 }
 
 .how-it-works .content {
@@ -362,40 +435,42 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 50px;
+    gap: 10px;
     margin-top: 100px;
     padding: 50px 0;
+    width: 800px;
 }
 
 .steps {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding-right: 50px;
+    flex: 2;
+    padding-right: 10px;
+    width: 80%;
 }
 
 .step {
     position: relative;
-    padding: 0 0 120px 60px;
+    padding: 0 0 120px 10px;
 }
 
 .step-number {
-    width: 90px;
-    height: 90px;
-    background-color: #1c2436;
-    color: #fff;
-    border-radius: 50%;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    font-size: 1.5rem;
-    transition: all 1.5s ease;
-    border: 2px solid transparent;
+  width: 90px;
+  height: 90px;
+  background-color: #1c2436;
+  color: #fff;
+  border-radius: 50%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: -150px;
+  top: 0;
+  z-index: 1;
+  font-size: 1.5rem;
+  transition: all 1.5s ease;
+  border: 2px solid transparent;
 }
 
 .step-number.active {
@@ -410,7 +485,7 @@ body {
     width: 2px;
     height: 0;
     background-color: #1c2436;
-    left: 45px;
+    left: -105px;
     top: 45px;
     transition: height 1.5s ease;
 }
@@ -432,11 +507,16 @@ body {
     }
 }
 
+.steps {
+  width: 800px;
+}
+
 .step .side {
-    margin: 20px 100px 0 100px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1.5s ease 0.3s; /* Added delay */
+  width: 200px;
+  margin: 20px 10px 0 0px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1.5s ease 0.3s; /* Added delay */
 }
 
 .step .side.active {
@@ -471,40 +551,49 @@ body {
 }
 
 /* Tablet Styles */
-.tablet {
-  width: 600px;
-  height: 400px;
-  background: #222;
-  border-radius: 30px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.6);
-  padding: 0 5px;
-  position: relative;
-  overflow: hidden;
+.container {
+    position: sticky; /* Allows for absolute positioning of elements inside */
+    width: 700px;  /*Adjust as needed, but consider the image's aspect ratio */
+    /*max-width: 800px;  Limit the maximum width */
+    margin: 0;
+    right: 0px;
 }
 
-.screen {
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
+#device-image {
+    width:90%; /* Make the device image responsive */
+    height: auto; /* Maintain aspect ratio */
 }
 
-.mockup-image {
+#image-overlay {
   position: absolute;
-  top: 20px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
+  top: 14.3%;  /* Adjusted to fit the screen */
+  left: 3.5%; /* Adjusted to fit the screen */
+  width: 72.6%; /* Adjusted to fit the screen */
+  height: 58.2%; /* Adjusted to fit the screen */
+  /*background-image: url('your-image-1.jpg');  Will be set by JS */
+  background-size: cover;
+  background-repeat: no-repeat;
+  /*transform-origin: 5 ;  Important for perspective transform */
+  /* The following values are the result of calculating the perspective transform
+      to make the overlay image fit the screen of the device.
+      The values were obtained using a transform tool.
+  */
+  transform-origin: bottom top;
+  transform: 
+    perspective(200px)
+    rotateX(3.0deg)
+    rotateY(-8.1deg)
+    rotateZ(2.5deg)
+    skewX(-10.1deg)
+    scaleY(1.5);
 
-.mockup-image.active {
-  opacity: 1;
-}
 
+
+    transition: background-image 0.5s ease-in-out; /* Smooth transition */
+    border-radius: 5px;
+    overflow: hidden; /* to contain the image within the rounded corners */
+
+}
 
 /* Responsive Styles */
 @media (max-width: 1024px) {
@@ -517,13 +606,7 @@ body {
         padding-right: 0;
         width: 100%;
     }
-    
-    .tablet-container {
-        flex: 1;
-        max-width: 100%;
-        margin-top: 50px;
-    }
-    
+     
     .step {
         padding: 0 0 80px 60px;
     }
@@ -533,22 +616,7 @@ body {
     }
 
     /* Mockup Frame Responsiveness */
-    .tablet-frame {
-        width: 100%;
-        height: auto;
-        padding: 0;
-        border-radius: 0;
-        box-shadow: none;
-        transform: none;
-    }
-
-    .tablet-stand {
-        display: none;
-    }
-
-    .tablet-container::after {
-        display: none;
-    }
+    
 
     .step-number {
         width: 80px;
