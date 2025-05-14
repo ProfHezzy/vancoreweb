@@ -239,3 +239,78 @@ const overlay = document.getElementById('image-overlay');
 
         // Change image every 3 seconds
         setInterval(swapImages, 3000);
+
+
+//======== Connection Lines ===============
+document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('connection-canvas');
+        const vancoreLogo = document.getElementById('vancore-logo');
+        const instagramIcon = document.getElementById('instagram-icon');
+        const xIcon = document.getElementById('x-icon');
+        const linkedinIcon = document.getElementById('linkedin-icon');
+        const googleIcon = document.getElementById('google-icon');
+        const stackIcon = document.getElementById('stack-icon');
+        const whatsappIcon = document.getElementById('whatsapp-icon');
+
+        function drawDashedLine(svg, x1, y1, x2, y2, color = 'gray', dashArray = '5, 5') {
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            line.setAttribute('stroke', color);
+            line.setAttribute('stroke-dasharray', dashArray);
+            svg.appendChild(line);
+        }
+
+        function getElementCenter(element) {
+            const rect = element.getBoundingClientRect();
+            return {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
+        }
+
+        function drawConnections() {
+            canvas.innerHTML = ''; // Clear previous drawings
+            const svgRect = canvas.getBoundingClientRect();
+            canvas.setAttribute('width', svgRect.width);
+            canvas.setAttribute('height', svgRect.height);
+
+            const vancoreCenter = getElementCenter(vancoreLogo);
+            const instagramCenter = getElementCenter(instagramIcon);
+            const xCenter = getElementCenter(xIcon);
+            const linkedinCenter = getElementCenter(linkedinIcon);
+            const googleCenter = getElementCenter(googleIcon);
+            const stackCenter = getElementCenter(stackIcon);
+            const whatsappCenter = getElementCenter(whatsappIcon);
+
+            // Adjust positions to be in-between
+            const vancoreInstagramMidX = vancoreCenter.x + (instagramCenter.x - vancoreCenter.x) * 0.5;
+            const vancoreInstagramMidY = vancoreCenter.y + (instagramCenter.y - vancoreCenter.y) * 0.5;
+            const instagramXMidX = instagramCenter.x + (xCenter.x - instagramCenter.x) * 0.5;
+            const instagramXMidY = instagramCenter.y + (xCenter.y - instagramCenter.y) * 0.5;
+
+            // Vincore to Instagram
+            drawDashedLine(canvas, vancoreCenter.x, vancoreCenter.y, instagramCenter.x, instagramCenter.y);
+
+            // Instagram to X
+            drawDashedLine(canvas, instagramCenter.x, instagramCenter.y, xCenter.x, xCenter.y);
+
+            // In-between Vincore & Instagram to LinkedIn (Up)
+            drawDashedLine(canvas, vancoreInstagramMidX, vancoreInstagramMidY, linkedinCenter.x, linkedinCenter.y);
+
+            // In-between Vincore & Instagram to Google (Down)
+            drawDashedLine(canvas, vancoreInstagramMidX, vancoreInstagramMidY, googleCenter.x, googleCenter.y);
+
+            // In-between Instagram & X to Stack (Up)
+            drawDashedLine(canvas, instagramXMidX, instagramXMidY, stackCenter.x, stackCenter.y);
+
+            // In-between Instagram & X to Whatsapp (Down)
+            drawDashedLine(canvas, instagramXMidX, instagramXMidY, whatsappCenter.x, whatsappCenter.y);
+        }
+
+        // Initial draw and redraw on window resize
+        drawConnections();
+        window.addEventListener('resize', drawConnections);
+    });
