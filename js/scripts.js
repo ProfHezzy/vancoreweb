@@ -223,94 +223,145 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const overlay = document.getElementById('image-overlay');
-        const images = [
-            'images/hero-mockup.png', // Placeholder 1
-            'images/hero-mockup.png'  // Placeholder 2
-        ];
-        let currentImageIndex = 0;
+const images = [
+    'images/hero-mockup.png', // Placeholder 1
+    'images/hero-mockup2.png'  // Placeholder 2
+];
+let currentImageIndex = 0;
 
-        function swapImages() {
-            overlay.style.backgroundImage = `url(${images[currentImageIndex]})`;
-            currentImageIndex = (currentImageIndex + 1) % images.length;
+function swapImages() {
+    overlay.style.backgroundImage = `url(${images[currentImageIndex]})`;
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+}
+
+// Initial image load
+swapImages();
+
+// Change image every 3 seconds
+setInterval(swapImages, 3000);
+
+
+// =============== Connection Lines ==========================
+document.addEventListener("DOMContentLoaded", function () {
+    const svg = document.getElementById("connection-canvas");
+
+    function getCenter(el) {
+        const rect = el.getBoundingClientRect();
+        const containerRect = svg.getBoundingClientRect();
+        return {
+            x: rect.left + rect.width / 2 - containerRect.left,
+            y: rect.top + rect.height / 2 - containerRect.top
+        };
+    }
+
+    function drawDashedLine(x1, y1, x2, y2) {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", "#6c757d");
+        line.setAttribute("stroke-width", "2");
+        line.setAttribute("stroke-dasharray", "6,4");
+        svg.appendChild(line);
+    }
+
+    // Improved curved line with Bézier curves
+    function drawSmoothCurve(from, to, direction, curveIntensity = 100) {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        
+        // Calculate control points based on direction
+        let cp1x, cp1y, cp2x, cp2y;
+        
+        if (direction === 'up') {
+            // Curve upward
+            const midY = Math.min(from.y, to.y) - curveIntensity;
+            cp1x = from.x;
+            cp1y = midY;
+            cp2x = to.x;
+            cp2y = midY;
+        } else {
+            // Curve downward
+            const midY = Math.max(from.y, to.y) + curveIntensity;
+            cp1x = from.x;
+            cp1y = midY;
+            cp2x = to.x;
+            cp2y = midY;
         }
 
-        // Initial image load
-        swapImages();
+        const d = `M ${from.x} ${from.y} 
+                  C ${cp1x} ${cp1y}, 
+                    ${cp2x} ${cp2y}, 
+                    ${to.x} ${to.y}`;
 
-        // Change image every 3 seconds
-        setInterval(swapImages, 3000);
+        path.setAttribute("d", d);
+        path.setAttribute("stroke", "#6c757d");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke-dasharray", "6,4");
+        svg.appendChild(path);
+    }
 
+    // Get all center positions
+    const vancore = getCenter(document.getElementById("vancore-logo"));
+    const instagram = getCenter(document.getElementById("instagram-icon"));
+    const x = getCenter(document.getElementById("x-icon"));
+    const linkedin = getCenter(document.getElementById("linkedin-icon"));
+    const google = getCenter(document.getElementById("google-icon"));
+    const stack = getCenter(document.getElementById("stack-icon"));
+    const whatsapp = getCenter(document.getElementById("whatsapp-icon"));
 
-//======== Connection Lines ===============
-document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('connection-canvas');
-        const vancoreLogo = document.getElementById('vancore-logo');
-        const instagramIcon = document.getElementById('instagram-icon');
-        const xIcon = document.getElementById('x-icon');
-        const linkedinIcon = document.getElementById('linkedin-icon');
-        const googleIcon = document.getElementById('google-icon');
-        const stackIcon = document.getElementById('stack-icon');
-        const whatsappIcon = document.getElementById('whatsapp-icon');
+    // Straight line: Vancore → Instagram
+    drawDashedLine(vancore.x, vancore.y, instagram.x, instagram.y);
 
-        function drawDashedLine(svg, x1, y1, x2, y2, color = 'gray', dashArray = '5, 5') {
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', x1);
-            line.setAttribute('y1', y1);
-            line.setAttribute('x2', x2);
-            line.setAttribute('y2', y2);
-            line.setAttribute('stroke', color);
-            line.setAttribute('stroke-dasharray', dashArray);
-            svg.appendChild(line);
-        }
+    // Straight line: Instagram → X
+    drawDashedLine(instagram.x, instagram.y, x.x, x.y);
 
-        function getElementCenter(element) {
-            const rect = element.getBoundingClientRect();
-            return {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-            };
-        }
+    // Calculate junction points
+    const junction1 = {
+        x: (vancore.x + instagram.x) / 2,
+        y: (vancore.y + instagram.y) / 2
+    };
 
-        function drawConnections() {
-            canvas.innerHTML = ''; // Clear previous drawings
-            const svgRect = canvas.getBoundingClientRect();
-            canvas.setAttribute('width', svgRect.width);
-            canvas.setAttribute('height', svgRect.height);
+    const junction2 = {
+        x: (instagram.x + x.x) / 2,
+        y: (instagram.y + x.y) / 2
+    };
 
-            const vancoreCenter = getElementCenter(vancoreLogo);
-            const instagramCenter = getElementCenter(instagramIcon);
-            const xCenter = getElementCenter(xIcon);
-            const linkedinCenter = getElementCenter(linkedinIcon);
-            const googleCenter = getElementCenter(googleIcon);
-            const stackCenter = getElementCenter(stackIcon);
-            const whatsappCenter = getElementCenter(whatsappIcon);
+    // Smooth curves from junctions
+    drawSmoothCurve(junction1, linkedin, 'up', 80);
+    drawSmoothCurve(junction1, google, 'down', 80);
+    drawSmoothCurve(junction2, stack, 'up', 60);
+    drawSmoothCurve(junction2, whatsapp, 'down', 60);
 
-            // Adjust positions to be in-between
-            const vancoreInstagramMidX = vancoreCenter.x + (instagramCenter.x - vancoreCenter.x) * 0.5;
-            const vancoreInstagramMidY = vancoreCenter.y + (instagramCenter.y - vancoreCenter.y) * 0.5;
-            const instagramXMidX = instagramCenter.x + (xCenter.x - instagramCenter.x) * 0.5;
-            const instagramXMidY = instagramCenter.y + (xCenter.y - instagramCenter.y) * 0.5;
+    // Redraw on resize
+    window.addEventListener('resize', function() {
+        svg.innerHTML = '';
+        // Recalculate and redraw all lines
+        const vancore = getCenter(document.getElementById("vancore-logo"));
+        const instagram = getCenter(document.getElementById("instagram-icon"));
+        const x = getCenter(document.getElementById("x-icon"));
+        const linkedin = getCenter(document.getElementById("linkedin-icon"));
+        const google = getCenter(document.getElementById("google-icon"));
+        const stack = getCenter(document.getElementById("stack-icon"));
+        const whatsapp = getCenter(document.getElementById("whatsapp-icon"));
 
-            // Vincore to Instagram
-            drawDashedLine(canvas, vancoreCenter.x, vancoreCenter.y, instagramCenter.x, instagramCenter.y);
+        drawDashedLine(vancore.x, vancore.y, instagram.x, instagram.y);
+        drawDashedLine(instagram.x, instagram.y, x.x, x.y);
 
-            // Instagram to X
-            drawDashedLine(canvas, instagramCenter.x, instagramCenter.y, xCenter.x, xCenter.y);
+        const junction1 = {
+            x: (vancore.x + instagram.x) / 2,
+            y: (vancore.y + instagram.y) / 2
+        };
 
-            // In-between Vincore & Instagram to LinkedIn (Up)
-            drawDashedLine(canvas, vancoreInstagramMidX, vancoreInstagramMidY, linkedinCenter.x, linkedinCenter.y);
+        const junction2 = {
+            x: (instagram.x + x.x) / 2,
+            y: (instagram.y + x.y) / 2
+        };
 
-            // In-between Vincore & Instagram to Google (Down)
-            drawDashedLine(canvas, vancoreInstagramMidX, vancoreInstagramMidY, googleCenter.x, googleCenter.y);
-
-            // In-between Instagram & X to Stack (Up)
-            drawDashedLine(canvas, instagramXMidX, instagramXMidY, stackCenter.x, stackCenter.y);
-
-            // In-between Instagram & X to Whatsapp (Down)
-            drawDashedLine(canvas, instagramXMidX, instagramXMidY, whatsappCenter.x, whatsappCenter.y);
-        }
-
-        // Initial draw and redraw on window resize
-        drawConnections();
-        window.addEventListener('resize', drawConnections);
+        drawSmoothCurve(junction1, linkedin, 'up', 80);
+        drawSmoothCurve(junction1, google, 'down', 80);
+        drawSmoothCurve(junction2, stack, 'up', 60);
+        drawSmoothCurve(junction2, whatsapp, 'down', 60);
     });
+});
